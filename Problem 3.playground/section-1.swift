@@ -5,43 +5,22 @@ import Darwin
 func isPrime(n:Int) -> Bool {
     // Convert n to Float for Darwin sqrt function
     let f:Float = Float(n)
-    
-    var answer: Bool = false
     var nsqrt: Float = sqrt(f)
     var floored: Int = Int(floor(nsqrt))
     var divisible: Int = 0
-    if n == 3 {
+    if n == 2 || n == 3 {
         return true
     }
 
     for index in 2...floored {
         if n % index == 0 {
-
             divisible++
-            return answer
+            return false
         }
-    }
         
-    if divisible < 1 {
-            answer = true
-        }
-    return answer
+    }
+    return true
 }
-
-func getPrimes(n:Int) -> [Int] {
-    var primes: [Int] = []
-    
-    for index in 2...n {
-        if isPrime(index) {
-            primes.append(index)
-        }
-        }
-    
-    
-    return primes
-}
-
-
 
 func nextPrime(n:Int) -> Int {
     var foundAPrime: Bool = false
@@ -120,4 +99,36 @@ func getPrimeFactors(n:Int) -> [Int] {
     return primeFactors
 }
 
-getPrimeFactors(5959)
+func primeSieve(n: Int) -> [Int] {
+    var mySieve = [Int: Bool]()
+    var primes = [Int]()
+    
+    // init the sieve
+    for index in 2...n {
+        mySieve[index] = true
+    }
+    
+    for p in 2...n {
+        var multiple = 2
+
+        while (p * multiple) <= n {
+            println("p is \(p) and multiple is \(multiple)")
+            if mySieve[(p * multiple)] == false {
+                break
+            } else {
+            mySieve[(p * multiple)] = false
+            multiple++
+            }
+        }
+    }
+    
+    for (key, value) in mySieve {
+        if value == true {
+            primes.append(key)
+        }
+    }
+
+    return primes
+}
+
+primeSieve(10)
