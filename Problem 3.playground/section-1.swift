@@ -113,12 +113,11 @@ func primeSieve(n: Int) -> [Int] {
 
         while (p * multiple) <= n {
             println("p is \(p) and multiple is \(multiple)")
-            if mySieve[(p * multiple)] == false {
-                break
-            } else {
+            if mySieve[(p * multiple)] == false {}
+            else if mySieve[(p * multiple)] == true {
             mySieve[(p * multiple)] = false
-            multiple++
             }
+            multiple++
         }
     }
     
@@ -131,4 +130,4 @@ func primeSieve(n: Int) -> [Int] {
     return primes
 }
 
-primeSieve(10)
+primeSieve(100)
