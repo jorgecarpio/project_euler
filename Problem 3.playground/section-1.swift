@@ -42,18 +42,26 @@ func getPrimes(n:Int) -> [Int] {
 }
 
 
+
 func nextPrime(n:Int) -> Int {
     var foundAPrime: Bool = false
     var myPrime = n
     
-    while !foundAPrime {
+    // If myPrime is even (unlikely) add one.
+    if myPrime % 2 == 0 {
         myPrime++
+    }
+    
+    while !foundAPrime {
+        // Only look at odds.
+        myPrime = myPrime + 2
         if isPrime(myPrime) {
             foundAPrime = true
         }
     }
     return myPrime
 }
+
 
 func getPrimeFactors(n:Int) -> [Int] {
     var primeFactors: [Int] = []
@@ -112,7 +120,4 @@ func getPrimeFactors(n:Int) -> [Int] {
     return primeFactors
 }
 
-getPrimeFactors(11)
-// 13195 calls isPrime 39 times
-// after my change it calls it 25 times
-// Changing array lookup loop to > from >= gets it to 25 times.
+getPrimeFactors(5959)
