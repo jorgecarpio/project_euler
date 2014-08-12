@@ -9,20 +9,22 @@ func isPrime(n:Int) -> Bool {
     var answer: Bool = false
     var nsqrt: Float = sqrt(f)
     var floored: Int = Int(floor(nsqrt))
-    var counter: Int = 2
     var divisible: Int = 0
-    
-    while counter <= floored {
-        if n % counter == 0 {
+    if n == 3 {
+        return true
+    }
+
+    for index in 2...floored {
+        if n % index == 0 {
+
             divisible++
+            return answer
         }
-        counter++
     }
+        
     if divisible < 1 {
-        answer = true
-    }
-    
-    
+            answer = true
+        }
     return answer
 }
 
@@ -110,7 +112,7 @@ func getPrimeFactors(n:Int) -> [Int] {
     return primeFactors
 }
 
-isPrime(11)
-// getPrimeFactors(111999)
+getPrimeFactors(11)
 // 13195 calls isPrime 39 times
+// after my change it calls it 25 times
 // Changing array lookup loop to > from >= gets it to 25 times.
