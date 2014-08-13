@@ -7,12 +7,14 @@ func isPrime(n:Int) -> Bool {
     let f:Float = Float(n)
     var nsqrt: Float = sqrt(f)
     var floored: Int = Int(floor(nsqrt))
+    var primes: [Int] = eratosthenesSieve(floored)
     var divisible: Int = 0
     if n == 2 || n == 3 {
         return true
     }
 
-    for index in 2...floored {
+    for index in primes {
+        println(index)
         if n % index == 0 {
             divisible++
             return false
@@ -126,3 +128,8 @@ func eratosthenesSieve(n: Int) -> [Int] {
     }
     return primes
 }
+
+// Original isPrime(104729) for loop executes 322 times
+isPrime(9000000)
+// After
+
