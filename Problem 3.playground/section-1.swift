@@ -99,35 +99,30 @@ func getPrimeFactors(n:Int) -> [Int] {
     return primeFactors
 }
 
-func primeSieve(n: Int) -> [Int] {
-    var mySieve = [Int: Bool]()
-    var primes = [Int]()
-    
-    // init the sieve
-    for index in 2...n {
-        mySieve[index] = true
-    }
-    
-    for p in 2...n {
-        var multiple = 2
 
-        while (p * multiple) <= n {
-            println("p is \(p) and multiple is \(multiple)")
-            if mySieve[(p * multiple)] == false {}
-            else if mySieve[(p * multiple)] == true {
-            mySieve[(p * multiple)] = false
-            }
-            multiple++
-        }
+func eratosthenesSieve(n: Int) -> [Int] {
+    var a: [Int: Int] = [1:0]
+    var p: Int = 2
+    var j: Int = p * p
+    var primes: [Int] = []
+    
+    // Populate the dictionary marking 2...n as prime
+    for i in 2...n {
+        a[i] = 1
     }
     
-    for (key, value) in mySieve {
-        if value == true {
+    while (p * p) <= n {
+        j = p * p
+        while j <= n {
+            a[j] = 0
+            j = j + p
+        }
+        p = p + 1
+    }
+    for (key, value) in a {
+        if a[key] == 1 {
             primes.append(key)
         }
     }
-
     return primes
 }
-
-primeSieve(100)
