@@ -1,29 +1,21 @@
 // Problem 3
 
-import Darwin
+import Foundation
 
 func isPrime(n:Int) -> Bool {
     // Convert n to Float for Darwin sqrt function
     let f:Float = Float(n)
     var nsqrt: Float = sqrt(f)
     var floored: Int = Int(floor(nsqrt))
-    var primes: [Int] = [2, 3]
     if n == 2 || n == 3 {
         return true
     }
 
-    for index in primes {
-        println(index)
-        if n % index == 0 {
-            return false
-        }
-        
-    }
     
     // check the rest of the primes minus 2 and 3
-    primes = eratosthenesSieve(floored)
-    var slice: [Int] = Array(primes[2..<primes.count])
-    for index in slice {
+    var primes = eratosthenesSieve(floored)
+    
+    for index in primes {
         if n % index == 0 {
             return false
         }
@@ -52,7 +44,7 @@ func nextPrime(n:Int) -> Int {
 }
 
 
-func getPrimeFactors(n:Int) -> [Int] {
+func getPrimeFactors(var n:Int) -> [Int] {
     var primeFactors: [Int] = []
     var currentPrimes: [Int] = [2]
     
@@ -61,60 +53,39 @@ func getPrimeFactors(n:Int) -> [Int] {
     
     var counter: Int = 0
     var currentPrime: Int = currentPrimes[counter]
+    let start = NSDate()
+    // Generate prime list once.
+    let f:Float = Float(n)
+    var nsqrt: Float = sqrt(f)
+    var floored: Int = Int(floor(nsqrt))
+    var primes: [Int] = eratosthenesSieve(floored)
     
-    while done == false {
-        if isPrime(dividend) {
-            println("found a prime: \(dividend)")
-            primeFactors.append(dividend)
-            done = true
-        } else if dividend % currentPrime == 0 {
-            println("found a prime: \(currentPrime)")
-            primeFactors.append(currentPrime)
-            dividend = dividend / currentPrime
-            
-            // Reset currentPrime to 2
-            // old way
-            // currentPrime = currentPrimes[0]
-            counter = 0
-            println("counter reset to zero")
-            
-        } else {
-            // Old way
-            // currentPrime = nextPrime(currentPrime)
-            
-            // New way to get the next Prime
-            // If currentPrimes[counter + 1 ] doesn't
-            // exist getPrimes add it to the array.
-            // Otherwise, just get it
-            println("counter is \(counter)")
-            // If this is greater than or equal to, then it will execute
-            // when the array is the right length.
-            
-            if (counter + 1 > (currentPrimes.count - 1)) {
-                currentPrimes.append(nextPrime(currentPrimes[counter]))
-                counter++
-                currentPrime = currentPrimes[counter]
-                println("current prime is \(currentPrime)")
-                println(currentPrimes)
-            } else {
-                counter++
-                currentPrime = currentPrimes[counter]
-                println("Saved a step; got \(currentPrime) from \(currentPrimes)")
-                
-            }
-            
+    for p in primes {
+        if (p * p) > n {
+            break
         }
-
-}
+        while n % p == 0 {
+            primeFactors.append(p)
+            n = n/p
+        }
+    }
+    if n > 1 {
+        primeFactors.append(n)
+    }
+    let stop = NSDate()
+    let diff = stop.timeIntervalSinceDate(start)
+    println(diff)
     return primeFactors
 }
 
-
 func eratosthenesSieve(n: Int) -> [Int] {
-    var a: [Int: Int] = [1:0]
+    var a: [Int: Int] = Dictionary<Int, Int>(minimumCapacity: n)
     var p: Int = 2
     var j: Int = p * p
     var primes: [Int] = []
+    
+    // Populate first
+    a[1] = 0
     
     // Populate the dictionary marking 2...n as prime
     for i in 2...n {
@@ -137,7 +108,10 @@ func eratosthenesSieve(n: Int) -> [Int] {
     return primes
 }
 
-// Original isPrime(104729) for loop executes 322 times
-isPrime(104729)
-// After
+getPrimeFactors(12)
+
+
+
+
+
 
