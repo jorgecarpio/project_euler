@@ -33,6 +33,7 @@ var initial: Int = 121
 while initial < 1000 {
     mults.map({
         (number: Int) -> () in
+        if (number % 10 == 0) { return }
         let result = number * initial
         if (isPalindrome(result)) {
             palindromes.append(result)
