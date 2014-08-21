@@ -26,26 +26,25 @@ var right: Int = 999
 var palindromes: [Int] = []
 let start = NSDate()
 
-while left > 99 {
-    
-    while right > 99 {
-        result = isPalindrome(left * right)
-        left * right
-        if result == true {
-            palindromes.append(left * right)
-            // println("left is \(left), right is \(right) and product is \(left * right)")
-            
-        }
-        right -= 1
-    }
-    
-    left -= 1
-    right = left
-    
+let mults: [Int] = Array(Range(101...999))
+var initial: Int = 121
 
+
+while initial < 1000 {
+    mults.map({
+        (number: Int) -> () in
+        let result = number * initial
+        if (isPalindrome(result)) {
+            palindromes.append(result)
+        }
+    })
+    
+    initial += 11
 }
-let numMax = palindromes.reduce(0, { max($0, $1) })
-println("The winner is \(numMax)")
+
+
+let winner = palindromes.reduce(0, { max ($0, $1) })
+println(winner)
 let stop = NSDate()
 let diff = stop.timeIntervalSinceDate(start)
 println(diff)
