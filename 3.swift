@@ -22,6 +22,10 @@ func getPrimeFactors(var n:Int) -> [Int] {
     let f:Float = Float(n)
     var nsqrt: Float = sqrt(f)
     var floored: Int = Int(floor(nsqrt))
+    if n == 2 || n == 3 {
+        primeFactors.append(n)
+        return primeFactors
+    }
     var primes: [Int] = eratosthenesSieve(floored)
     
     for p in primes {
