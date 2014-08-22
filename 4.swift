@@ -5,8 +5,6 @@ import Foundation
 
 
 func isPalindrome(n: Int) -> Bool {
-    var answer: Bool = false
-    
     var str: String = String(n)
     var chars: [Character] = []
     
@@ -14,10 +12,7 @@ func isPalindrome(n: Int) -> Bool {
         chars.append(c)
     }
     
-    answer = (chars == chars.reverse())
-    
-    
-    return answer
+    return (chars == chars.reverse())
 }
 
 var result: Bool = false
